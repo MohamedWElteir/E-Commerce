@@ -1,0 +1,34 @@
+package org.fawry.ecommerce.services;
+
+import org.fawry.ecommerce.abstracts.CheckoutValidation;
+import org.fawry.ecommerce.interfaces.Shippable;
+import org.fawry.ecommerce.models.Customer;
+
+import java.util.List;
+
+public class CheckoutService {
+    private final Customer customer;
+    private final CheckoutValidation validation;
+    private final ShippingService shippingService;
+
+    public CheckoutService(Customer customer, CheckoutValidation validation, ShippingService shippingService) {
+        this.customer = customer;
+        this.validation = validation;
+        this.shippingService = shippingService;
+    }
+    public void checkout() {
+        validation.handle(customer.getCart(), customer.getBalance());
+        var subtotal = customer.getCart().calculateSubtotal();
+        var shipping = customer.getCart().calculateShipping();
+        var total = subtotal + shipping;
+        customer.deductBalance(total);
+        System.out.println("=== Checkout Summary ===");
+        System.out.println("Subtotal: $" + subtotal);
+        System.out.println("Shipping: $" + shipping);
+        System.out.println("Total Paid: $" + total);
+        System.out.println("Balance Left: $" + customer.getBalance());
+        List<Shippable> shippable = customer.getCart().getShippableItems();
+        shippingService.ship(shippable);
+        customer.getCart().clearCart();
+    }
+}
