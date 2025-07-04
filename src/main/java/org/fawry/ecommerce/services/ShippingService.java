@@ -11,7 +11,7 @@ public class ShippingService {
         for(Shippable item : items){
             System.out.println(
                     "Item: " + item.getName() + ',' +
-                    " Weight: " + item.getWeight() + ',' +
+                    " Weight: " + item.getWeight() + " kg"+ ',' +
                     " Shipping Fee: " + item.getShippingFee());
         }
     }
