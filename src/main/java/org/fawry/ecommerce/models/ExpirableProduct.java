@@ -15,5 +15,8 @@ public class ExpirableProduct extends Product implements Expirable {
 
     public Date getExpirationDate() { return expirationDate;  }
 
-    public boolean isExpired() { return expirationDate.before(new Date());  }
+    public boolean isExpired() {
+        return expirationDate != null && expirationDate.before(new Date());
+    }
+
 }

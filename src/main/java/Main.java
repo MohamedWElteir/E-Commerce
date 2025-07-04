@@ -13,8 +13,9 @@ import org.fawry.ecommerce.models.Customer;
 import org.fawry.ecommerce.services.CheckoutService;
 import org.fawry.ecommerce.services.ShippingService;
 
-import java.time.Instant;
-import java.util.Date;
+
+import java.util.Calendar;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -23,12 +24,15 @@ public class Main {
         ProductFactory.registerBuilder(ProductType.EXPIRABLE_SHIPPABLE, new ExpirableShippableProductBuilder());
         ProductFactory.registerBuilder(ProductType.GENERIC, new GenericProductBuilder());
 
+        Calendar cheeseCal = Calendar.getInstance();
+        cheeseCal.add(Calendar.DAY_OF_MONTH, 15);
+
         Product cheese = ProductFactory.create(
                 ProductType.EXPIRABLE_SHIPPABLE,
                 "Cheeeeese",
                 50.69,
                 15,
-                Date.from(Instant.now()),
+                cheeseCal.getTime(),
                 15,
                 0.6
                 );
@@ -37,7 +41,7 @@ public class Main {
                 "Samsung 69' TV",
                 3000,
                 5,
-                 new Date(),
+                 null,
                 25,
                 1.2
         );
@@ -46,13 +50,13 @@ public class Main {
                 "Amazon Gift Card",
                 10,
                 15,
-                new Date(),
+                null,
                 15,
                 0
         );
 
 
-        Customer customer = new Customer("Mohamed", 4000.0);
+        Customer customer = new Customer("Mohamed", 9000);
         customer.getCart().addItem(cheese, 1);
         customer.getCart().addItem(TV, 1);
         customer.getCart().addItem(giftCard, 2);

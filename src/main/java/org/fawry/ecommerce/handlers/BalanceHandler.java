@@ -7,6 +7,6 @@ public class BalanceHandler extends CheckoutValidation {
     @Override
     protected void check(Cart cart, double balance) {
         var total = cart.calculateSubtotal() + cart.calculateShipping();
-        if(total > balance) throw new IllegalArgumentException("Balance is not enough");
+        if(total > balance) throw new IllegalArgumentException("Balance is not enough. Balance:" + balance + " and the total is: "+ total);
     }
 }

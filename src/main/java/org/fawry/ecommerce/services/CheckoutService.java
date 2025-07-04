@@ -17,16 +17,23 @@ public class CheckoutService {
         this.shippingService = shippingService;
     }
     public void checkout() {
+         final String GREEN = "\u001B[32m";
+         final String RESET = "\u001B[0m";
         validation.handle(customer.getCart(), customer.getBalance());
         var subtotal = customer.getCart().calculateSubtotal();
         var shipping = customer.getCart().calculateShipping();
         var total = subtotal + shipping;
         customer.deductBalance(total);
-        System.out.println("=== Checkout Summary ===");
-        System.out.println("Subtotal: $" + subtotal);
-        System.out.println("Shipping: $" + shipping);
-        System.out.println("Total Paid: $" + total);
-        System.out.println("Balance Left: $" + customer.getBalance());
+        System.out.println(
+                         GREEN +
+                        "=== Checkout Summary ===\n" +
+                        "Subtotal: $" + subtotal + "\n" +
+                        "Shipping: $" + shipping + "\n" +
+                        "Total Paid: $" + total + '\n' +
+                        "Balance Left: $" + customer.getBalance() +
+                        RESET
+        );
+
         List<Shippable> shippable = customer.getCart().getShippableItems();
         shippingService.ship(shippable);
         customer.getCart().clearCart();
