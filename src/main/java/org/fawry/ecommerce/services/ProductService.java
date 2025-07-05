@@ -1,11 +1,10 @@
 package org.fawry.ecommerce.services;
 
-import org.fawry.ecommerce.abstracts.Product;
+
 import org.fawry.ecommerce.interfaces.Expirable;
 import org.fawry.ecommerce.models.Cart;
 import org.fawry.ecommerce.models.CartItem;
 
-import java.util.List;
 
 public class ProductService {
     public void reduceStock(Cart cart) {
