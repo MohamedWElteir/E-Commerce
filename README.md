@@ -1,6 +1,6 @@
 # E-Commerce System in Java
 
-A lightweight, extensible Java-based e-commerce system designed using clean object-oriented principles and several design patterns. The system supports product management, cart functionality, checkout validation, and shipping orchestration.
+A lightweight, extensible Java-based e-commerce system designed using clean object-oriented principles and several design patterns. Project is built as a task for Fawry's internship. The system supports product management, cart functionality, checkout validation, and shipping orchestration.
 
 ---
 
