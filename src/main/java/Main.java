@@ -14,7 +14,8 @@ import org.fawry.ecommerce.services.CheckoutService;
 import org.fawry.ecommerce.services.ShippingService;
 
 
-import java.util.Calendar;
+import java.time.LocalDate;
+
 
 
 public class Main {
@@ -24,15 +25,15 @@ public class Main {
         ProductFactory.registerBuilder(ProductType.EXPIRABLE_SHIPPABLE, new ExpirableShippableProductBuilder());
         ProductFactory.registerBuilder(ProductType.GENERIC, new GenericProductBuilder());
 
-        Calendar cheeseCal = Calendar.getInstance();
-        cheeseCal.add(Calendar.DAY_OF_MONTH, 15);
+
+
 
         Product cheese = ProductFactory.create(
                 ProductType.EXPIRABLE_SHIPPABLE,
-                "Cheeeeese",
+                "Cheese",
                 50.69,
                 15,
-                cheeseCal.getTime(),
+                LocalDate.now().plusDays(-5),
                 15,
                 0.6
                 );
@@ -41,7 +42,7 @@ public class Main {
                 "Samsung 69' TV",
                 3000,
                 5,
-                 null,
+                LocalDate.now(),
                 25,
                 1.2
         );
@@ -63,7 +64,7 @@ public class Main {
 
 
         CheckoutValidation handler = new EmptyCartHandler();
-        handler.setnext(new ExpiryHandler()).setnext(new BalanceHandler());
+        handler.setNext(new ExpiryHandler()).setNext(new BalanceHandler());
 
 
         ShippingService shippingService = new ShippingService();

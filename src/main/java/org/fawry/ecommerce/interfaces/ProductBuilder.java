@@ -2,8 +2,8 @@ package org.fawry.ecommerce.interfaces;
 
 import org.fawry.ecommerce.abstracts.Product;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface ProductBuilder {
-    Product build(String name, double price, int quantity, Date expiry, double weight, double shippingFee);
+    Product build(String name, double price, int quantity, LocalDate expiry, double weight, double shippingFee);
 }

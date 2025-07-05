@@ -3,8 +3,8 @@ package org.fawry.ecommerce.models;
 import org.fawry.ecommerce.abstracts.Product;
 
 public class CartItem {
-    Product product;
-    int quantity;
+   private final Product product;
+    private int quantity;
 
     public CartItem(Product product, int quantity) {
         this.product = product;

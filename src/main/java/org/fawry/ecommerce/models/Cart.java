@@ -1,6 +1,7 @@
 package org.fawry.ecommerce.models;
 
 import org.fawry.ecommerce.abstracts.Product;
+import org.fawry.ecommerce.interfaces.Expirable;
 import org.fawry.ecommerce.interfaces.Shippable;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Cart {
         }
         if(product.getQuantity() < quantity) throw new IllegalArgumentException("Insufficient product quantity in stock");
         var item = items.stream()
-                .filter(i -> i.product.equals(product))
+                .filter(i -> i.getProduct().equals(product))
                 .findFirst();
 
         if (item.isPresent()) {
@@ -26,7 +27,7 @@ public class Cart {
         }else {
             items.add(new CartItem(product, quantity));
         }
-        product.reduceQuantity(quantity);
+//        product.reduceQuantity(quantity);
 
     }
 
@@ -55,12 +56,28 @@ public class Cart {
     }
 
     public boolean isEmpty() {return items.isEmpty();}
+    public record ShippableItems(String name, double weight, double shippingFee, int quantity) {}
 
-    public List<Shippable> getShippableItems() {
+    public List<ShippableItems> getShippableItems() {
         return items.stream()
-                .filter(i -> i.product instanceof Shippable)
-                .map(i -> (Shippable) i.product)
+                .filter(i -> {
+                    Product product = i.getProduct();
+                    boolean isShippable = product instanceof Shippable;
+                    boolean isNotExpired = !(product instanceof Expirable) || !((Expirable) product).isExpired();
+                    return isShippable && isNotExpired;
+                })
+                .map(i -> {
+                    Shippable p = (Shippable) i.getProduct();
+                    return new ShippableItems(
+                            p.getName(),
+                            p.getWeight(),
+                            p.getShippingFee(),
+                            i.getQuantity()
+                    );
+                })
                 .toList();
     }
 
+
 }
+

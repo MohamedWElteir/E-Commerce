@@ -1,7 +1,7 @@
 package org.fawry.ecommerce.services;
 
 import org.fawry.ecommerce.abstracts.CheckoutValidation;
-import org.fawry.ecommerce.interfaces.Shippable;
+import org.fawry.ecommerce.models.Cart;
 import org.fawry.ecommerce.models.Customer;
 
 import java.util.List;
@@ -10,6 +10,8 @@ public class CheckoutService {
     private final Customer customer;
     private final CheckoutValidation validation;
     private final ShippingService shippingService;
+    private static final String GREEN = "\u001B[32m";
+   private static final String RESET = "\u001B[0m";
 
     public CheckoutService(Customer customer, CheckoutValidation validation, ShippingService shippingService) {
         this.customer = customer;
@@ -17,8 +19,7 @@ public class CheckoutService {
         this.shippingService = shippingService;
     }
     public void checkout() {
-         final String GREEN = "\u001B[32m";
-         final String RESET = "\u001B[0m";
+
         validation.handle(customer.getCart(), customer.getBalance());
         var subtotal = customer.getCart().calculateSubtotal();
         var shipping = customer.getCart().calculateShipping();
@@ -34,7 +35,7 @@ public class CheckoutService {
                         RESET
         );
 
-        List<Shippable> shippable = customer.getCart().getShippableItems();
+        List<Cart.ShippableItems> shippable = customer.getCart().getShippableItems();
         shippingService.ship(shippable);
         customer.getCart().clearCart();
     }

@@ -12,6 +12,10 @@ public class ExpiryHandler extends CheckoutValidation {
                                          ((Expirable)i.getProduct())
                                                  .isExpired())
                                                     .toList();
-        if(!ExpiredItems.isEmpty()) throw new IllegalArgumentException("Cart contains expired items" + ExpiredItems);
+        if(!ExpiredItems.isEmpty()) {
+            System.err.println("Expired items were found:");
+            ExpiredItems.forEach(i -> System.err.println( i.getQuantity() + 'x' +" Product: " + i.getProduct().getName() +
+                    " is expired on: " + ((Expirable)i.getProduct()).getExpirationDate()));
+        }
     }
 }

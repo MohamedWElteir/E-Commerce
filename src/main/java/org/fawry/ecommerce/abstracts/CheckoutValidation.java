@@ -5,7 +5,7 @@ import org.fawry.ecommerce.models.Cart;
 public abstract class CheckoutValidation {
     protected CheckoutValidation next;
 
-    public CheckoutValidation setnext(CheckoutValidation validator){
+    public CheckoutValidation setNext(CheckoutValidation validator){
         this.next = validator;
         return validator;
     }

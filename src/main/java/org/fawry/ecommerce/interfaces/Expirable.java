@@ -1,8 +1,8 @@
 package org.fawry.ecommerce.interfaces;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface Expirable {
-   Date getExpirationDate();
+   LocalDate getExpirationDate();
    boolean isExpired();
 }
