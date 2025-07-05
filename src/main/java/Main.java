@@ -11,6 +11,7 @@ import org.fawry.ecommerce.handlers.EmptyCartHandler;
 import org.fawry.ecommerce.handlers.ExpiryHandler;
 import org.fawry.ecommerce.models.Customer;
 import org.fawry.ecommerce.services.CheckoutService;
+import org.fawry.ecommerce.services.ProductService;
 import org.fawry.ecommerce.services.ShippingService;
 
 
@@ -68,7 +69,8 @@ public class Main {
 
 
         ShippingService shippingService = new ShippingService();
-        CheckoutService checkout = new CheckoutService(customer, handler, shippingService);
+        ProductService productService = new ProductService();
+        CheckoutService checkout = new CheckoutService(customer, handler, shippingService,productService);
         checkout.checkout();
 
     }

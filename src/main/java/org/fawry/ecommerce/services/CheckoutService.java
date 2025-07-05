@@ -10,13 +10,15 @@ public class CheckoutService {
     private final Customer customer;
     private final CheckoutValidation validation;
     private final ShippingService shippingService;
+    private final ProductService productService;
     private static final String GREEN = "\u001B[32m";
    private static final String RESET = "\u001B[0m";
 
-    public CheckoutService(Customer customer, CheckoutValidation validation, ShippingService shippingService) {
+    public CheckoutService(Customer customer, CheckoutValidation validation, ShippingService shippingService, ProductService productService) {
         this.customer = customer;
         this.validation = validation;
         this.shippingService = shippingService;
+        this.productService = productService;
     }
     public void checkout() {
 
@@ -37,6 +39,8 @@ public class CheckoutService {
 
         List<Cart.ShippableItems> shippable = customer.getCart().getShippableItems();
         shippingService.ship(shippable);
+        System.out.println("Thank you for your purchase, " + customer.getName() + "!");
+        productService.reduceStock(customer.getCart());
         customer.getCart().clearCart();
     }
 }

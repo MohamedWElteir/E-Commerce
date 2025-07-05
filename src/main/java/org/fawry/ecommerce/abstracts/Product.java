@@ -23,11 +23,7 @@ public abstract class Product {
     public int getQuantity() { return quantity; }
 
     public void reduceQuantity(int amount) {
-        if (amount <= quantity) {
-            quantity -= amount;
-        } else {
-            throw new IllegalArgumentException("Insufficient quantity");
-        }
+        if(this.quantity < amount) throw new IllegalArgumentException("Insufficient stock");
+        this.quantity -= amount;
     }
-
 }
