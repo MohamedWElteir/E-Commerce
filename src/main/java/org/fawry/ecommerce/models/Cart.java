@@ -7,8 +7,8 @@ import org.fawry.ecommerce.interfaces.Shippable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart {
-    private final List<CartItem> items = new ArrayList<>();
+public record Cart() {
+    private static final List<CartItem> items = new ArrayList<>();
 
     public void addItem(Product product, int quantity){
         if (product == null || quantity <= 0) {
@@ -41,7 +41,12 @@ public class Cart {
     public List<CartItem> getItems() {return items;  }
 
     public double calculateSubtotal(){
-        return items.stream().mapToDouble(
+        return items.stream()
+                .filter(i -> {
+                    Product product = i.getProduct();
+                    return !(product instanceof Expirable) || !((Expirable) product).isExpired();
+                })
+                .mapToDouble(
                 item -> item.getProduct().getPrice() * item.getQuantity()
         ).sum();
     }
@@ -50,7 +55,13 @@ public class Cart {
         items.clear();
     }
     public double calculateShipping(){
-        return items.stream().filter(item -> item.getProduct() instanceof Shippable)
+        return items.stream()
+                .filter(i -> {
+                    Product product = i.getProduct();
+                    boolean isShippable = product instanceof Shippable;
+                    boolean isNotExpired = !(product instanceof Expirable) || !((Expirable) product).isExpired();
+                    return isShippable && isNotExpired;
+                })
                 .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity() * ((Shippable) item.getProduct()).getShippingFee())
                 .sum();
     }
