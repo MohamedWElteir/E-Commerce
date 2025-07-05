@@ -112,6 +112,6 @@ Item: [item], Weight: 25.0 kg, Shipping Fee: 1.2
 ## Author
 
 Mohamed Wael  
-Competitive programmer • .NET API enthusiast • 2× ECPC Finalist
+Competitive programmer • .NET API enthusiast • 2× ECPC Qualifications Finalist
 
 ---
